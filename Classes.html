@@ -2,18 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1"   />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Classes</title>
-
     <link rel="stylesheet" href="css/style.css">
-</head>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-family: Arial, sans-serif;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
 
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        caption {
+            caption-side: top;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .class-description {
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
 <body>
 
     <header>
         <h1>Classes</h1>
-
     </header>
 
     <nav>
@@ -25,80 +59,53 @@
     </nav>
 
     <main>
-      <div class="class-description">
-      
-      <p>
-        Here you can see my class schedule. 
-      </p>
-      
-      </div>
+        <div class="class-description">
+            <p>Here you can see my class schedule.</p>
+        </div>
 
-      <div class="classes">
-                
-        <table>
-                    <caption>Lawand's Class Schedule</caption>
+        <div class="classes">
+            <table id="classTable">
+                <caption>Lawand's Class Schedule</caption>
+                <thead>
                     <tr>
-                        <th>Class</th>
+                        <th onclick="sortTable(0)">Class &#x25B2;&#x25BC;</th>
                         <th>Days</th>
                         <th>Times</th>
-                        <th>Instructor</th>
+                        <th onclick="sortTable(3)">Instructor &#x25B2;&#x25BC;</th>
                         <th>Location</th>
-            </tr>
-                    <tr>
-                        <td>ENG203</td>
-                        <td>Sun, Tue, Thu</td>
-                        <td>11:45am, 12:45pm</td>
-                        <td>Dr. Kazi</td>
-                        <td>B-F2-16</td>
-            </tr>
-                    <tr>
-                        <td>MGT404</td>
-                        <td>Sun,Tue, Thu</td>
-                        <td>10:30am, 11:30am</td>
-                        <td>Dr. Anwar</td>
-                        <td>B-F2-15</td>
                     </tr>
-
-                    <tr>
-                        <td>ECO221</td>
-                        <td>Mon, Wed</td>
-                        <td>12:30pm, 2:00pm</td>
-                        <td>Dr. Sumer</td>
-                        <td>B-F2-15</td>
-            </tr>            
-                    <tr>
-                        <td>BUS401</td>
-                        <td>Mon, Wed</td>
-                        <td>2:15pm, 3:45pm</td>
-                        <td>Dr. Anwar</td>
-                        <td>B-G-09</td>
-                    </tr>
-                    <tr>
-                        <td>ITE304</td>
-                        <td>Mon, Wed</td>
-                        <td>4:00pm, 5:30pm</td>
-                        <td>Dr. Alan</td>
-                        <td>B-B1-04</td>
-                    </tr>
-              <tr>
-                        <td>MGT405</td>
-                        <td>Mon, Wed</td>
-                        <td>4:00pm, 5:30pm</td>
-                        <td>Dr. Anwar</td>
-                        <td>Direct Study</td>
-                </tr>
-        </table>
-                
-            </div>
-  
-
+                </thead>
+                <tbody>
+                    <tr><td>ENG203</td><td>Sun, Tue, Thu</td><td>11:45am, 12:45pm</td><td>Dr. Kazi</td><td>B-F2-16</td></tr>
+                    <tr><td>MGT404</td><td>Sun, Tue, Thu</td><td>10:30am, 11:30am</td><td>Dr. Anwar</td><td>B-F2-15</td></tr>
+                    <tr><td>ECO221</td><td>Mon, Wed</td><td>12:30pm, 2:00pm</td><td>Dr. Sumer</td><td>B-F2-15</td></tr>
+                    <tr><td>BUS401</td><td>Mon, Wed</td><td>2:15pm, 3:45pm</td><td>Dr. Anwar</td><td>B-G-09</td></tr>
+                    <tr><td>ITE304</td><td>Mon, Wed</td><td>4:00pm, 5:30pm</td><td>Dr. Alan</td><td>B-B1-04</td></tr>
+                    <tr><td>MGT405</td><td>Mon, Wed</td><td>4:00pm, 5:30pm</td><td>Dr. Anwar</td><td>Direct Study</td></tr>
+                </tbody>
+            </table>
+        </div>
     </main>
 
-  <footer>
-       
-      <p>&copy; 2025 Lawand Mohammed Ahmed</p>
+    <footer>
+        <p>&copy; 2025 Lawand Mohammed Ahmed</p>
     </footer>
-  
 
+    <script>
+        function sortTable(columnIndex) {
+            const table = document.getElementById("classTable");
+            const rows = Array.from(table.tBodies[0].rows);
+            const isAscending = table.dataset.sortOrder !== "asc";
+
+            rows.sort((rowA, rowB) => {
+                const cellA = rowA.cells[columnIndex].innerText.toLowerCase();
+                const cellB = rowB.cells[columnIndex].innerText.toLowerCase();
+                return (cellA > cellB ? 1 : -1) * (isAscending ? 1 : -1);
+            });
+
+            rows.forEach(row => table.tBodies[0].appendChild(row));
+            table.dataset.sortOrder = isAscending ? "asc" : "desc";
+        }
+    </script>
 </body>
 </html>
